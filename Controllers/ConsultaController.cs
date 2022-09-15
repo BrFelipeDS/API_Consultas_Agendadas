@@ -10,6 +10,8 @@ namespace API_Consultas_Agendadas.Controllers
     [ApiController]
     public class ConsultaController : ControllerBase
     {
+
+        // Criação do repositorio para acesso aos métodos do Repository
         private readonly IConsultaRepository repositorio;
 
         public ConsultaController(IConsultaRepository _repositorio)

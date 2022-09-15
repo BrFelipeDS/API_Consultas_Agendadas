@@ -14,7 +14,7 @@ namespace API_Consultas_Agendadas.Models
         public int? IdPaciente { get; set; }
         public int? IdMedico { get; set; }
 
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)] //Uso do JsonIgnoreCondition para evitar mostrar conteúdo desnecessário no Swagger
         public virtual Medico IdMedicoNavigation { get; set; }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]

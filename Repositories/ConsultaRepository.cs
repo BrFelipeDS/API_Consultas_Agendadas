@@ -10,6 +10,7 @@ namespace API_Consultas_Agendadas.Repositories
 {
     public class ConsultaRepository : IConsultaRepository
     {
+        //Criação do contexto para acesso ao banco de dados com o Entity Framework
         Consultas_AgendadasContext ctx;
 
         public ConsultaRepository(Consultas_AgendadasContext _ctx)
@@ -25,6 +26,8 @@ namespace API_Consultas_Agendadas.Repositories
 
         public ICollection<Consulta> GetAll()
         {
+            //Utilizando o Include, é possível exibir no Get as informações referentes aos atributos das entidades que são Foreign Keys na entidade atual
+            //Utilizando o ThenInclude, é possível exibir no get as informações referentes aos atributos das entidades que são Foreign Keys em uma Foreign Key da entidade atual
             var consultas = ctx.Consulta
                 .Include(p => p.IdPacienteNavigation)
                 .ThenInclude(u => u.IdUsuarioNavigation)
@@ -41,7 +44,7 @@ namespace API_Consultas_Agendadas.Repositories
                 .ThenInclude(u => u.IdUsuarioNavigation)
                 .Include(m => m.IdMedicoNavigation)
                 .ThenInclude(u => u.IdUsuarioNavigation)
-                .FirstOrDefault(m => m.Id == id);
+                .FirstOrDefault(m => m.Id == id); //FirtsOrDefault exibe a primeiro ocorrência ou a padrão que obedece à condição da expressão Lambda
 
             return consulta;
         }
