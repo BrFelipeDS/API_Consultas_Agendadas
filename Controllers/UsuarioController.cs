@@ -19,6 +19,10 @@ namespace API_Consultas_Agendadas.Controllers
             repositorio = _repositorio;
         }
 
+        /// <summary>
+        /// Lista todos os objetos presentes no banco de dados
+        /// </summary>
+        /// <returns>Lista de todos os objetos</returns>
         [HttpGet]
         public IActionResult Listar()
         {
@@ -39,6 +43,11 @@ namespace API_Consultas_Agendadas.Controllers
 
         }
 
+        /// <summary>
+        /// Seleciona apenas 1 objeto com o Id especificado
+        /// </summary>
+        /// <param name="id">Id do objeto a ser selecionado</param>
+        /// <returns>Objeto com o Id inserido</returns>
         [HttpGet("{id}")]
         public IActionResult BuscarPorId(int id)
         {
@@ -64,6 +73,12 @@ namespace API_Consultas_Agendadas.Controllers
             }
         }
 
+        /// <summary>
+        /// Altera apenas informações específicas do objeto
+        /// </summary>
+        /// <param name="id">Id do objeto a ser alterado</param>
+        /// <param name="patch">Informações que serão alteradas no objeto destino</param>
+        /// <returns>Novo objeto com as alterações realizadas</returns>
         [HttpPatch("{id}")]
         public IActionResult AlterarParcialmente(int id, [FromBody] JsonPatchDocument patch)
         {

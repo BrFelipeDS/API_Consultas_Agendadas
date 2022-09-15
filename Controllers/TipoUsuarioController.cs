@@ -16,6 +16,10 @@ namespace API_Consultas_Agendadas.Controllers
             repositorio = _repositorio;
         }
 
+        /// <summary>
+        /// Lista todos os objetos presentes no banco de dados
+        /// </summary>
+        /// <returns>Lista de todos os objetos</returns>
         [HttpGet]
         public IActionResult Listar()
         {

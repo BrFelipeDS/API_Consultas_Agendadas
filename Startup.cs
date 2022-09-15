@@ -12,7 +12,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace API_Consultas_Agendadas
@@ -33,7 +35,27 @@ namespace API_Consultas_Agendadas
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "API_Consultas_Agendadas", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { 
+                    Title = "API_Consultas_Agendadas", 
+                    Version = "v1",
+                    Description = "API desenvolvida para o Desafio da Sprint de Entity Framework da EduSync.",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Felipe Diniz Sampaio",
+                        Url = new Uri("https://meusite.com")
+                    },
+                    License = new OpenApiLicense
+                    {
+                        Name = "Phillp's INC",
+                        Url = new Uri("https://meusite.com")
+                    }
+                 });
+
+                // Documentação XML
+
+                var xmlArquivo = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlArquivo));
+
             });
 
             // Adição das injeções de dependência

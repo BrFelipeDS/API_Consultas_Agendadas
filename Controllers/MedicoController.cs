@@ -17,6 +17,11 @@ namespace API_Consultas_Agendadas.Controllers
             repositorio = _repositorio;
         }
 
+        /// <summary>
+        /// Inserção de um objeto no banco de dados. MANTENHA O VALOR DE TODOS OS "Id" COMO "0"!
+        /// </summary>
+        /// <param name="medico">Objeto completo a ser inserido</param>
+        /// <returns>Objeto inserido</returns>
         [HttpPost]
         public IActionResult Cadastrar(Medico medico)
         {
@@ -36,6 +41,10 @@ namespace API_Consultas_Agendadas.Controllers
             }
         }
 
+        /// <summary>
+        /// Lista todos os objetos presentes no banco de dados
+        /// </summary>
+        /// <returns>Lista de todos os objetos</returns>
         [HttpGet]
         public IActionResult Listar()
         {
@@ -55,6 +64,11 @@ namespace API_Consultas_Agendadas.Controllers
             }
         }
 
+        /// <summary>
+        /// Seleciona apenas 1 objeto com o Id especificado
+        /// </summary>
+        /// <param name="id">Id do objeto a ser selecionado</param>
+        /// <returns>Objeto com o Id inserido</returns>
         [HttpGet("{id}")]
         public IActionResult BuscarPorId(int id)
         {
@@ -80,6 +94,12 @@ namespace API_Consultas_Agendadas.Controllers
             }
         }
 
+        /// <summary>
+        /// Altera um objeto no banco de dados conforme o Id. ATENÇÃO: NO JSON, COLOQUE O VALOR DOS "Id" CONFORME SEUS VALORES NO BANCO DE DADOS!
+        /// </summary>
+        /// <param name="id">Id do objeto a ser alterado</param>
+        /// <param name="medico">O objeto completado que substituirá o existente no banco de dados</param>
+        /// <returns>Objeto alterado</returns>
         [HttpPut("{id}")]
         public IActionResult Alterar(int id, Medico medico)
         {
@@ -112,6 +132,12 @@ namespace API_Consultas_Agendadas.Controllers
             }
         }
 
+        /// <summary>
+        /// Altera apenas informações específicas do objeto
+        /// </summary>
+        /// <param name="id">Id do objeto a ser alterado</param>
+        /// <param name="patch">Informações que serão alteradas no objeto destino</param>
+        /// <returns>Novo objeto com as alterações realizadas</returns>
         [HttpPatch("{id}")]
         public IActionResult AlterarParcialmente(int id, [FromBody] JsonPatchDocument patch)
         {
@@ -144,6 +170,11 @@ namespace API_Consultas_Agendadas.Controllers
             }            
         }
 
+        /// <summary>
+        /// Deleta um objeto do banco de dados de acordo com o id informado
+        /// </summary>
+        /// <param name="id">Id do objeto a ser deletado</param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public IActionResult Deletar(int id)
         {
