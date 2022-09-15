@@ -36,7 +36,14 @@ namespace API_Consultas_Agendadas.Repositories
 
         public Consulta GetById(int id)
         {
-            return ctx.Consulta.Find(id);
+            var consulta = ctx.Consulta
+                .Include(p => p.IdPacienteNavigation)
+                .ThenInclude(u => u.IdUsuarioNavigation)
+                .Include(m => m.IdMedicoNavigation)
+                .ThenInclude(u => u.IdUsuarioNavigation)
+                .FirstOrDefault(m => m.Id == id);
+
+            return consulta;
         }
 
         public Consulta Insert(Consulta consulta)
