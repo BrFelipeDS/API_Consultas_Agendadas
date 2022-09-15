@@ -37,7 +37,13 @@ namespace API_Consultas_Agendadas.Repositories
 
         public Medico GetById(int id)
         {
-            return ctx.Medicos.Find(id);
+            var medico = ctx.Medicos
+                .Include(e => e.IdEspecialidadeNavigation)
+                .Include(u => u.IdUsuarioNavigation)
+                .Include(c => c.Consulta)
+                .FirstOrDefault(m => m.Id == id);
+
+            return medico;
         }
 
         public Medico Insert(Medico medico)
