@@ -36,12 +36,7 @@ namespace API_Consultas_Agendadas.Repositories
 
         public Paciente GetById(int id)
         {
-            var paciente = ctx.Pacientes
-                .Include(u => u.IdUsuarioNavigation)
-                .Include(c => c.Consulta)
-                .FirstOrDefault(p => p.Id == id);
-
-            return paciente;
+            return ctx.Pacientes.Find(id);
         }
 
         public Paciente Insert(Paciente paciente)

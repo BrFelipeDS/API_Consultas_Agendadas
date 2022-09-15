@@ -35,12 +35,7 @@ namespace API_Consultas_Agendadas.Repositories
 
         public Especialidade GetById(int id)
         {
-            var especialidade = ctx.Especialidades
-                .Include(m => m.Medicos)
-                .ThenInclude(u => u.IdUsuarioNavigation)
-                .FirstOrDefault(m => m.Id == id);
-
-            return especialidade;
+            return ctx.Especialidades.Find(id);
         }
 
         public Especialidade Insert(Especialidade especialidade)
