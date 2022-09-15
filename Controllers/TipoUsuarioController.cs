@@ -35,30 +35,5 @@ namespace API_Consultas_Agendadas.Controllers
             }
 
         }
-
-        [HttpGet("{id}")]
-        public IActionResult BuscarPorId(int id)
-        {
-            try
-            {
-                var retorno = repositorio.GetById(id);
-
-                if (retorno is null)
-                {
-                    return NotFound(new { Message = "Não foi encontrado um tipo de usuário com esse Id." });
-                }
-
-                return Ok(retorno);
-            }
-            catch (System.Exception ex)
-            {
-                return StatusCode(500, new
-                {
-                    Error = "Falha na transação",
-                    Message = ex.Message
-                });
-
-            }
-        }
     }
 }
