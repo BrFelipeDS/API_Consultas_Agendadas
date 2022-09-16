@@ -23,7 +23,7 @@ CREATE TABLE Usuario(
 	Senha NVARCHAR(MAX),
 
 	-- FK's
-	IdTipoUsuario INT
+	IdTipoUsuario INT NOT NULL
 	FOREIGN KEY (IdTipoUsuario) REFERENCES TipoUsuario(Id)
 );
 
@@ -34,7 +34,7 @@ CREATE TABLE Paciente(
 	Ativo BIT,
 
 	-- FK's
-	IdUsuario INT
+	IdUsuario INT NOT NULL
 	FOREIGN KEY (IdUsuario) REFERENCES Usuario(Id)
 );
 GO
@@ -44,10 +44,10 @@ CREATE TABLE Medico(
 	CRM NVARCHAR(MAX),
 
 	-- FK's
-	IdUsuario INT
+	IdUsuario INT NOT NULL
 	FOREIGN KEY (IdUsuario) REFERENCES Usuario(Id),
 
-	IdEspecialidade INT
+	IdEspecialidade INT NOT NULL
 	FOREIGN KEY (IdEspecialidade) REFERENCES Especialidade(Id)
 );
 GO
@@ -57,10 +57,10 @@ CREATE TABLE Consulta(
 	DataHora DATETIME,
 
 	-- FK's
-	IdPaciente INT
+	IdPaciente INT NOT NULL
 	FOREIGN KEY (IdPaciente) REFERENCES Paciente(Id),
 
-	IdMedico INT
+	IdMedico INT NOT NULL
 	FOREIGN KEY (IdMedico) REFERENCES Medico(Id)	
 );
 GO
