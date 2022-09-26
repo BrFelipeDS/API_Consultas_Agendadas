@@ -27,6 +27,8 @@ namespace API_Consultas_Agendadas.Controllers
         {
             try
             {
+                paciente.IdUsuarioNavigation.Senha = BCrypt.Net.BCrypt.HashPassword(paciente.IdUsuarioNavigation.Senha);
+
                 var retorno = repositorio.Insert(paciente);
                 return Ok(retorno);
             }
@@ -118,6 +120,8 @@ namespace API_Consultas_Agendadas.Controllers
                     return NotFound(new { Message = "Não foi encontrado um paciente com esse Id." });
                 }
 
+                paciente.IdUsuarioNavigation.Senha = BCrypt.Net.BCrypt.HashPassword(paciente.IdUsuarioNavigation.Senha);
+
                 repositorio.Update(paciente);
 
                 return Ok(paciente);
@@ -155,6 +159,8 @@ namespace API_Consultas_Agendadas.Controllers
                 {
                     return NotFound(new { Message = "Não foi encontrado um paciente com esse Id." });
                 }
+
+                paciente.IdUsuarioNavigation.Senha = BCrypt.Net.BCrypt.HashPassword(paciente.IdUsuarioNavigation.Senha);
 
                 repositorio.UpdateParcial(patch, paciente);
 

@@ -1,5 +1,6 @@
 ﻿using API_Consultas_Agendadas.Interfaces;
 using API_Consultas_Agendadas.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +25,7 @@ namespace API_Consultas_Agendadas.Controllers
         /// </summary>
         /// <param name="consulta">Objeto completo a ser inserido</param>
         /// <returns>Objeto inserido</returns>
+        [Authorize]
         [HttpPost]
         public IActionResult Cadastrar(Consulta consulta)
         {
@@ -102,6 +104,7 @@ namespace API_Consultas_Agendadas.Controllers
         /// <param name="id">Id do objeto a ser alterado</param>
         /// <param name="consulta">O objeto completado que substituirá o existente no banco de dados</param>
         /// <returns>Objeto alterado</returns>
+        [Authorize]
         [HttpPut("{id}")]
         public IActionResult Alterar(int id, Consulta consulta)
         {
@@ -140,6 +143,7 @@ namespace API_Consultas_Agendadas.Controllers
         /// <param name="id">Id do objeto a ser alterado</param>
         /// <param name="patch">Informações que serão alteradas no objeto destino</param>
         /// <returns>Novo objeto com as alterações realizadas</returns>
+        [Authorize]
         [HttpPatch("{id}")]
         public IActionResult AlterarParcialmente(int id, [FromBody] JsonPatchDocument patch)
         {
@@ -177,6 +181,7 @@ namespace API_Consultas_Agendadas.Controllers
         /// </summary>
         /// <param name="id">Id do objeto a ser deletado</param>
         /// <returns></returns>
+        [Authorize]
         [HttpDelete("{id}")]
         public IActionResult Deletar(int id)
         {

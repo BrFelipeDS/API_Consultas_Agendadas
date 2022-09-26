@@ -5,10 +5,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
@@ -56,6 +58,34 @@ namespace API_Consultas_Agendadas
                 var xmlArquivo = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlArquivo));
 
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = @"Necessário token para autenticação.                                  
+                                    Exemplo: 'Bearer 12345abcdef'",
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                          new OpenApiSecurityScheme
+                          {
+                              Reference = new OpenApiReference
+                              {
+                                  Type = ReferenceType.SecurityScheme,
+                                  Id = "Bearer"
+                              },
+                              Scheme = "oauth2",
+                              Name = "Bearer",
+                              In = ParameterLocation.Header,
+                          },
+                         new string[] {}
+                    }
+                });
+
             });
 
             // Adição das injeções de dependência
@@ -67,6 +97,31 @@ namespace API_Consultas_Agendadas
             services.AddTransient<IMedicoRepository, MedicoRepository>();
             services.AddTransient<IPacienteRepository, PacienteRepository>();
             services.AddTransient<ITipoUsuarioRepository, TipoUsuarioRepository>();
+            services.AddTransient<ILoginRepository, LoginRepository>();
+
+            services.AddDbContext<Consultas_AgendadasContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("SqlServer"))
+            );
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = "JwtBearer";
+                options.DefaultChallengeScheme = "JwtBearer";
+            })
+            .AddJwtBearer("JwtBearer", options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("consultasAgendadas-chave-autenticacao")),
+                    ClockSkew = TimeSpan.FromMinutes(30),
+                    ValidIssuer = "consultasAgendadas.webAPI",
+                    ValidAudience = "consultasAgendadas.webAPI"
+                };
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -82,6 +137,8 @@ namespace API_Consultas_Agendadas
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
