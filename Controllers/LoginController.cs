@@ -19,11 +19,21 @@ namespace API_Consultas_Agendadas.Controllers
 
 
         [HttpPost]
-        public IActionResult Logar(string email, string senha)
+        public IActionResult LogarPaciente(string email, string senha)
         {
-            var logar = repo.Logar(email, senha);
+            var logar = repo.LogarPaciente(email, senha);
             if (logar == null)
-                return Unauthorized();
+                return Unauthorized( new {msg = "Usuário não autorizado"});
+
+            return Ok(new { token = logar });
+        }
+
+        [HttpPost]
+        public IActionResult LogarMedico(string email, string senha)
+        {
+            var logar = repo.LogarMedico(email, senha);
+            if (logar == null)
+                return Unauthorized(new { msg = "Usuário não autorizado" });
 
             return Ok(new { token = logar });
         }

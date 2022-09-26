@@ -3,6 +3,8 @@ namespace API_Consultas_Agendadas.Interfaces
 {
     public interface ILoginRepository
     {
-        string Logar(string email, string senha);
+        string LogarPaciente(string email, string senha);
+
+        string LogarMedico(string email, string senha);
     }
 }
