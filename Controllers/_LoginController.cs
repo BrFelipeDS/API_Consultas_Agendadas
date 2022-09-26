@@ -7,18 +7,18 @@ namespace API_Consultas_Agendadas.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LoginController : ControllerBase
+    public class _LoginController : ControllerBase
     {
 
         private readonly ILoginRepository repo;
 
-        public LoginController(ILoginRepository _repo)
+        public _LoginController(ILoginRepository _repo)
         {
             repo = _repo;
         }
 
 
-        [HttpPost]
+        [HttpPost("Login_Paciente")]
         public IActionResult LogarPaciente(string email, string senha)
         {
             var logar = repo.LogarPaciente(email, senha);
@@ -28,7 +28,7 @@ namespace API_Consultas_Agendadas.Controllers
             return Ok(new { token = logar });
         }
 
-        [HttpPost]
+        [HttpPost("Login_Medico")]
         public IActionResult LogarMedico(string email, string senha)
         {
             var logar = repo.LogarMedico(email, senha);

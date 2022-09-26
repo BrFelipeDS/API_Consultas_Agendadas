@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 #nullable disable
@@ -15,6 +16,8 @@ namespace API_Consultas_Agendadas.Models
 
         
         public int Id { get; set; }
+
+        [Required]
         public string Crm { get; set; }
 
         public int? IdUsuario { get; set; }

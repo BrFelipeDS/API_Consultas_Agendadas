@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 #nullable disable
@@ -14,8 +15,14 @@ namespace API_Consultas_Agendadas.Models
         }
 
         public int Id { get; set; }
+
+        [Required]
         public string Carteirinha { get; set; }
+
+        [Required]
         public DateTime? DataNascimento { get; set; }
+
+        [Required]
         public bool? Ativo { get; set; }
 
         

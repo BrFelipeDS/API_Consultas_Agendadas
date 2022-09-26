@@ -24,6 +24,11 @@ namespace API_Consultas_Agendadas.Repositories
 
             var usuario = ctx.Usuarios.FirstOrDefault(x => x.Email == email);
 
+            if(usuario.IdTipoUsuario == 2)
+            {
+                return null;
+            }
+
             if(usuario is not null)
             {
                 bool confere = BCrypt.Net.BCrypt.Verify(senha, usuario.Senha);
@@ -69,6 +74,11 @@ namespace API_Consultas_Agendadas.Repositories
             //return ctx.Usuarios.Where(x => x.Email == email && x.Senha == senha).FirstOrDefault();
 
             var usuario = ctx.Usuarios.FirstOrDefault(x => x.Email == email);
+
+            if (usuario.IdTipoUsuario == 1)
+            {
+                return null;
+            }
 
             if (usuario is not null)
             {
